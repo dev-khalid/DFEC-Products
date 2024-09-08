@@ -19,6 +19,11 @@ services:
       DB_USER: inventory-user
       DB_PASSWORD: secret-password
       DB_PORT: 3306
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
   # inventory-ui:
   inventory-database:
     image: mysql:8.0.33
@@ -31,7 +36,6 @@ services:
       MYSQL_DATABASE: inventory
       MYSQL_USER: inventory-user
       MYSQL_PASSWORD: secret-password
-    restart: always
     healthcheck:
       test:
         [
