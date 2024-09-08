@@ -21,8 +21,8 @@ services:
       DB_PORT: 3306
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 5s
-      timeout: 10s
+      interval: 2m
+      timeout: 30s
       retries: 3
   # inventory-ui:
   inventory-database:
