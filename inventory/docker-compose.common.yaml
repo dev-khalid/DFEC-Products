@@ -1,5 +1,7 @@
 services: 
   inventory: 
+    networks: 
+      - E-Commerce
     image: node:20-alpine
     working_dir: /app
     volumes: 
