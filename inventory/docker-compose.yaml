@@ -18,6 +18,7 @@ services:
       DB_HOST: inventory-database
       DB_USER: inventory-user
       DB_PASSWORD: secret-password
+      DB_PORT: 3306
   # inventory-ui:
   inventory-database:
     image: mysql:8.0.33
