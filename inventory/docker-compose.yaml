@@ -1,0 +1,35 @@
+networks: 
+  E-Commerce: 
+    driver: bridge
+services:
+  inventory-server:
+    extends: 
+      file: ./docker-compose.common.yaml
+      service: inventory
+    container_name: inventory-server
+    working_dir: /app/inventory-server
+    ports: 
+      - '8080:8080'
+    command: npm run start:dev
+    depends_on: 
+      - inventory-database
+  # inventory-ui:
+  inventory-database: 
+    image: mysql:8.0.33
+    ports:
+      - "3306:3306"
+    volumes:
+      - inventory-db:/var/lib/mysql #this will store data inside docker-engine's volume.
+    environment:
+      MYSQL_ROOT_PASSWORD: Q38t2F5Y#4d
+      MYSQL_DATABASE: inventory
+      MYSQL_USER: inventory-user
+      MYSQL_PASSWORD: secret-password
+    restart: always
+    healthcheck:
+      test: ["CMD", "CMD", "mysql", "-h", "localhost", "-u", "root", "-p", "Q38t2F5Y#4d", "-e", "SELECT 1"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+volumes:
+  inventory-db:

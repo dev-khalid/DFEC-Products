@@ -1,0 +1,12 @@
+services: 
+  inventory: 
+    image: node:20-alpine
+    working_dir: /app
+    volumes: 
+     - ./:/app
+    # healthcheck:
+    # deploy:
+    environment: 
+      PORT: 8080
+      NODE_ENV: development
+      NODE_OPTIONS: '--max-old-space-size=512'
