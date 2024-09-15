@@ -27,7 +27,6 @@ services:
       interval: 2m
       timeout: 30s
       retries: 3
-  # inventory-ui:
   inventory-database:
     image: mysql:8.0.33
     networks: 

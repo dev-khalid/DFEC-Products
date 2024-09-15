@@ -1,8 +1,8 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "dfec-products",
   "private": true,
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "Devops focused e-commerce application -> Products",
   "license": "MIT",
   "scripts": {
     "build": "nest build",
