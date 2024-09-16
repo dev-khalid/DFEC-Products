@@ -1,25 +1,25 @@
 networks:
-  E-Commerce:
+  DFEC:
     driver: bridge
 services:
-  inventory-server:
+  products-server:
     extends:
       file: ./docker-compose.common.yaml
-      service: inventory
-    container_name: inventory-server
-    working_dir: /app/inventory-server
+      service: products
+    container_name: products-server
+    working_dir: /app/products-server
     ports:
       - '8080:8080'
     command: npm run start:dev
     depends_on:
-      - inventory-database
+      - products-database
     environment:
-      DB_NAME: inventory
-      DB_HOST: inventory-database
-      DB_USER: inventory-user
+      DB_NAME: products
+      DB_HOST: products-database
+      DB_USER: products-user
       DB_PASSWORD: secret-password
       DB_PORT: 3306
-      REDIS_HOST: e-commerce-cache
+      REDIS_HOST: DFEC-cache
       REDIS_PORT: 6379
       REDIS_PASSWORD: "&2@9J*4h%7F#d16s5V$"
     healthcheck:
@@ -27,18 +27,19 @@ services:
       interval: 2m
       timeout: 30s
       retries: 3
-  inventory-database:
+  products-database:
     image: mysql:8.0.33
+    container_name: products-database
     networks: 
-      - E-Commerce
+      - DFEC
     ports:
       - '3306:3306'
     volumes:
-      - inventory-db:/var/lib/mysql #this will store data inside docker-engine's volume.
+      - products-db:/var/lib/mysql #this will store data inside docker-engine's volume.
     environment:
       MYSQL_ROOT_PASSWORD: Q38t2F5Y#4d
-      MYSQL_DATABASE: inventory
-      MYSQL_USER: inventory-user
+      MYSQL_DATABASE: products
+      MYSQL_USER: products-user
       MYSQL_PASSWORD: secret-password
     healthcheck:
       test:
@@ -58,12 +59,12 @@ services:
       interval: 1m
       timeout: 10s
       retries: 3
-  e-commerce-cache:
+  DFEC-cache:
     #this will later be used at all other services.
     image: redis:7.4.0-alpine
     networks: 
-      - E-Commerce
-    container_name: e-commerce-redis
+      - DFEC
+    container_name: DFEC-redis
     command: redis-server --requirepass "&2@9J*4h%7F#d16s5V$"
     volumes:
       - cache:/data
@@ -75,5 +76,5 @@ services:
     #   timeout: 10s
     #   retries: 3
 volumes:
-  inventory-db:
+  products-db:
   cache:
