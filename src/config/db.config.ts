@@ -1,5 +1,5 @@
-// import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const dbConfig: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -8,21 +8,11 @@ export const dbConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  autoLoadEntities: true,
-  synchronize: true,
-};
-
-// export const dbConfig = {
-//   imports: [ConfigModule],
-//   useFactory: (configService: ConfigService) => ({
-//     type: 'mysql',
-//     host: configService.get('DB_HOST'),
-//     port: +configService.get('DB_PORT'),
-//     username: configService.get('DB_USER'),
-//     password: configService.get('DB_PASSWORD'),
-//     database: configService.get('DB_NAME'),
-//     entities: [],
-//     synchronize: true,
-//   }),
-//   inject: [ConfigService],
-// };
+  entities: ['dist/**/*.entity{.ts,.js}'],
+  synchronize: false,
+  logging: true,
+  migrationsTableName: 'typeorm_migrations',
+  migrationsRun: false,
+}; 
+const connectionSource = new DataSource(dbConfig as DataSourceOptions);
+export default connectionSource;
