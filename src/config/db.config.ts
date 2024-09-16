@@ -8,11 +8,13 @@ export const dbConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  autoLoadEntities: true,
   entities: ['dist/**/*.entity{.ts,.js}'],
   synchronize: false,
   logging: true,
   migrationsTableName: 'typeorm_migrations',
   migrationsRun: false,
+  migrations: ['dist/**/migrations/*{.ts,.js}'],
 }; 
 const connectionSource = new DataSource(dbConfig as DataSourceOptions);
 export default connectionSource;

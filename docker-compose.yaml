@@ -28,7 +28,7 @@ services:
       timeout: 30s
       retries: 3
     volumes: 
-      - ./migrations:/app/migrations
+      - ./src/migrations:/app/src/migrations
   products-database:
     image: mysql:8.0.33
     container_name: products-database

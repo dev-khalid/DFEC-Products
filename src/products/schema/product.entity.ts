@@ -2,11 +2,12 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
-  OneToOne,
   ManyToOne,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Category } from './category.entity';
+import { Inventory } from 'src/inventory/schema/inventory.entity';
 
 @Entity()
 export class Product {
@@ -21,9 +22,6 @@ export class Product {
 
   @Column()
   price: number;
-
-  @Column()
-  quantity: number;
 
   @Column({ nullable: true })
   imageUrl: string;
@@ -41,4 +39,8 @@ export class Product {
     cascade: true,
   })
   category: Category; // Many products to one category...
+
+  @OneToOne(() => Inventory, (inventory) => inventory.product)
+  @JoinColumn()
+  inventory: Inventory;
 }
