@@ -14,3 +14,7 @@ Data Stores:
 - Redis
 - MySql
 
+Tasks:
+- [x] Introduce Swagger
+- [x] Class validator
+- [ ] Category CRUD

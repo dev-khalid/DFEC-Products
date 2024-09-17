@@ -11,6 +11,7 @@ export class Inventory{
   @PrimaryGeneratedColumn()
   id: number;
 
+  
   @Column()
   quantity: number;
 
