@@ -5,6 +5,8 @@ import {
   OneToMany,
   ManyToMany,
   OneToOne,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { Product } from './product.entity';
 import {
@@ -23,7 +25,7 @@ export class Category {
   @Column()
   name: string;
 
-  @ApiPropertyOptional({ description: 'Category description' })
+  @ApiProperty({ required: false, description: 'Category description' })
   @Column({ nullable: true })
   description: string;
 
@@ -38,12 +40,16 @@ export class Category {
 
   @ApiPropertyOptional()
   @ApiResponseProperty()
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 
-  @ApiPropertyOptional({ type: Category })
-  @ApiResponseProperty({ type: Category })
-  @OneToOne(() => Category)
+  @ApiProperty({ required: false, type: Category })
+  @ManyToOne(() => Category)
+  @JoinColumn()
   parentCategory: Category; // One category can have only one parent...
 
   @ApiPropertyOptional({ type: [Product] })

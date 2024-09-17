@@ -47,7 +47,11 @@ export class Product {
 
   @ApiPropertyOptional()
   @ApiResponseProperty()
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 
   @ApiPropertyOptional()
