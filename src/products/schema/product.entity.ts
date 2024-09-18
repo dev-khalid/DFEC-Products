@@ -13,6 +13,8 @@ import {
   ApiPropertyOptional,
   ApiResponseProperty,
 } from '@nestjs/swagger';
+import { Currency, EntityStatus } from 'src/common';
+import { IsOptional, IsUrl } from 'class-validator';
 
 @Entity()
 export class Product {
@@ -32,13 +34,26 @@ export class Product {
   @Column()
   price: number;
 
+  @ApiProperty({ type: 'enum', enum: Currency, default: Currency.USD })
+  @Column({ type: 'enum', enum: Currency, default: Currency.USD })
+  currency: Currency;
+
   @ApiPropertyOptional()
   @Column({ nullable: true })
+  @IsOptional()
+  @IsUrl()
   imageUrl: string;
 
   @ApiProperty()
   @Column({ default: true })
   isActive: boolean;
+
+  @ApiProperty({
+    enum: EntityStatus,
+    default: EntityStatus.ACTIVE,
+  })
+  @Column({ type: 'enum', enum: EntityStatus, default: EntityStatus.ACTIVE })
+  entityStatus: EntityStatus;
 
   @ApiPropertyOptional()
   @ApiResponseProperty()

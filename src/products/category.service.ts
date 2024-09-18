@@ -3,6 +3,7 @@ import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Category } from './schema/category.entity';
+import { EntityStatus } from 'src/common';
 
 @Injectable()
 export class CategoryService {
@@ -29,7 +30,7 @@ export class CategoryService {
   }
 
   async createCategory(category: CreateCategoryDto) {
-    let newEntry = this.categoryRepository.create(category);
+    const newEntry = this.categoryRepository.create(category);
     await this.categoryRepository.save(newEntry);
     return newEntry;
   }
@@ -49,6 +50,14 @@ export class CategoryService {
   }
 
   async deleteCategory(categoryId: number) {
-    return await this.categoryRepository.delete({ id: categoryId });
+    const entity = await this.categoryRepository.findOne({
+      where: { id: categoryId },
+    });
+    entity.entityStatus = EntityStatus.ARCHIVED;
+    await this.categoryRepository.save(entity);
+    return entity;
+    // We will never delete a category
+    // Instead we will archive it.
+    // return await this.categoryRepository.delete({ id: categoryId });
   }
 }

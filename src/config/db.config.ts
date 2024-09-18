@@ -11,10 +11,10 @@ export const dbConfig: TypeOrmModuleOptions = {
   autoLoadEntities: true,
   entities: ['dist/**/*.entity{.ts,.js}'],
   synchronize: false,
-  logging: true,
+  logging: false,
   migrationsTableName: 'typeorm_migrations',
   migrationsRun: false,
   migrations: ['dist/**/migrations/*{.ts,.js}'],
-}; 
+};
 const connectionSource = new DataSource(dbConfig as DataSourceOptions);
 export default connectionSource;

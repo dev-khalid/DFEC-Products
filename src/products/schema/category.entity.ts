@@ -3,8 +3,6 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  ManyToMany,
-  OneToOne,
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
@@ -14,6 +12,7 @@ import {
   ApiPropertyOptional,
   ApiResponseProperty,
 } from '@nestjs/swagger';
+import { EntityStatus } from 'src/common';
 
 @Entity()
 export class Category {
@@ -32,6 +31,13 @@ export class Category {
   @ApiProperty({ type: Boolean, default: true })
   @Column({ default: true })
   isActive: boolean;
+
+  @ApiProperty({
+    enum: EntityStatus,
+    default: EntityStatus.ACTIVE,
+  })
+  @Column({ type: 'enum', enum: EntityStatus, default: EntityStatus.ACTIVE })
+  entityStatus: EntityStatus;
 
   @ApiPropertyOptional()
   @ApiResponseProperty()
