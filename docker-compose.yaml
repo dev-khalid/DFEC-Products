@@ -21,28 +21,30 @@ services:
       DB_PORT: 3306
       REDIS_HOST: DFEC-cache
       REDIS_PORT: 6379
-      REDIS_PASSWORD: "&2@9J*4h%7F#d16s5V$"
+      REDIS_PASSWORD: '&2@9J*4h%7F#d16s5V$'
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost:8080/health']
       interval: 2m
       timeout: 30s
       retries: 3
-    volumes: 
+    volumes:
       - ./src/migrations:/app/src/migrations
   products-database:
     image: mysql:8.0.33
     container_name: products-database
-    networks: 
+    networks:
       - DFEC
     ports:
       - '3306:3306'
-    volumes:
-      - products-db:/var/lib/mysql #this will store data inside docker-engine's volume.
+
     environment:
       MYSQL_ROOT_PASSWORD: Q38t2F5Y#4d
       MYSQL_DATABASE: products
       MYSQL_USER: products-user
       MYSQL_PASSWORD: secret-password
+    volumes:
+      - ./initial-db-commands:/docker-entrypoint-initdb.d
+      - products-db:/var/lib/mysql #this will store data inside docker-engine's volume.
     healthcheck:
       test:
         [
@@ -64,7 +66,7 @@ services:
   DFEC-cache:
     #this will later be used at all other services.
     image: redis:7.4.0-alpine
-    networks: 
+    networks:
       - DFEC
     container_name: DFEC-redis
     command: redis-server --requirepass "&2@9J*4h%7F#d16s5V$"

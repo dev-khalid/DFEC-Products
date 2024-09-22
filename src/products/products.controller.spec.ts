@@ -52,6 +52,10 @@ describe('ProductsController', () => {
       const result = [product];
       jest.spyOn(productRepository, 'find').mockResolvedValueOnce(result);
       expect(await productsController.getProducts()).toEqual(result);
+      expect(productRepository.find).toHaveBeenCalledWith({
+        where: { entityStatus: EntityStatus.ACTIVE },
+        relations: ['category'],
+      });
     });
   });
 });
