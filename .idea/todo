@@ -1,0 +1,2 @@
+1. Unit test of controllers separately. At this time mock service.
+2. Unit test of services. At this time mock Database operations and do all the db operations in-memory.
