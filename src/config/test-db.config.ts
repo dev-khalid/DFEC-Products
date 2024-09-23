@@ -9,12 +9,12 @@ export const testDbConfig: TypeOrmModuleOptions = {
   password: 'test_password',
   database: 'DFEC_test',
   autoLoadEntities: true,
-  entities: ['dist/**/*.entity{.ts,.js}'],
-  synchronize: false,
+  entities: ['src/**/*.entity{.ts}'],
+  synchronize: true,
   logging: false,
   migrationsTableName: 'typeorm_migrations',
   migrationsRun: true,
-  migrations: ['dist/**/migrations/*{.ts,.js}'],
+  migrations: ['src/**/migrations/*{.ts}'],
 };
 const testConnectionSource = new DataSource(testDbConfig as DataSourceOptions);
 export default testConnectionSource;
