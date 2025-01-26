@@ -49,7 +49,6 @@ services:
       test:
         [
           'CMD',
-          'CMD',
           'mysql',
           '-h',
           'localhost',
@@ -60,8 +59,8 @@ services:
           '-e',
           'SELECT 1',
         ]
-      interval: 1m
-      timeout: 10s
+      interval: 3m
+      timeout: 30s
       retries: 3
   DFEC-cache:
     #this will later be used at all other services.
@@ -74,11 +73,11 @@ services:
       - cache:/data
     ports:
       - '6379:6379'
-    # healthcheck:
-    #   test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
-    #   interval: 1m
-    #   timeout: 10s
-    #   retries: 3
+    healthcheck:
+      test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
+      interval: 3m
+      timeout: 10s
+      retries: 3
 volumes:
   products-db:
   cache:

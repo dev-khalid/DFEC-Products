@@ -20,7 +20,9 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('DFEC-Products')
-    .setDescription('The DFEC-Products API documentation.')
+    .setDescription(
+      'The DFEC-Products (DevOps focused e-commerce) API documentation.',
+    )
     .setVersion('1.0')
     .addTag('Products')
     .build();

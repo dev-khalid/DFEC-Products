@@ -1,5 +1,5 @@
 # This image will be used in production version only.
-FROM node:20-alpine as base
+FROM node:22-alpine as base
 
 FROM base as build
 WORKDIR /app

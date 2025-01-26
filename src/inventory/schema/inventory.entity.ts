@@ -21,10 +21,6 @@ export class Inventory {
   @Column({ default: 0 })
   availableQuantity: number;
 
-  @ApiProperty({ default: 0 })
-  @Column({ default: 0 })
-  reservedQuantity: number;
-
   @ApiProperty({ type: () => Product })
   @OneToOne(() => Product, (product) => product.inventory)
   product: Product;
