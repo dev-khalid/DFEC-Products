@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dfec-products-env
+  namespace: default
+data:
+  DB_NAME: products
+  DB_HOST: products-database
+  DB_USER: products-user 
+  DB_PORT: '3306'
+  REDIS_HOST: DFEC-cache
+  REDIS_PORT: '6379' 

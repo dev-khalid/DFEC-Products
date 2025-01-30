@@ -1,2 +1,22 @@
+Tasks are sorted by priority: 
+
+Kubernetes: 
+1. Deploy products-server
+2. Deploy mysql 
+3. Deploy redis
+4. Connect and run
+5. Convert it to helm chart
+6. Learn how mysql and redis works with helm
+
+Service: 
+1. Complete inventory-service. 
+
+Tests: 
 1. Unit test of controllers separately. At this time mock service.
 2. Unit test of services. At this time mock Database operations and do all the db operations in-memory.
+
+Documentation: 
+1. Make sure swagger api document cover each endpoints, currently it's incomplete.
+
+
+

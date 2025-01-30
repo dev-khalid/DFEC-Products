@@ -14,4 +14,5 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/tsconfig.json ./
 
+CMD ["npm", "run", "start:prod"]
 EXPOSE 8080

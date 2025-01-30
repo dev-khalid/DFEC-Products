@@ -1,0 +1,9 @@
+#Common Environment Variables
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-env
+  namespace: default
+data:
+  NODE_ENV: development
+  NODE_OPTIONS: '--max-old-space-size=512'

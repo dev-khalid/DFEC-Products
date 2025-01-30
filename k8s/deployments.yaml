@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dfec-products
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dfec-products 
+  template:
+    metadata:
+      labels:
+        app: dfec-products 
+    spec:
+      containers:
+      - name: dfec-products-container
+        image: khalidhossain/dfec-products:latest
+        envFrom: 
+        - configMapRef: 
+            name: common-env
+        - configMapRef: 
+            name: dfec-products-env
+        - secretRef:
+            name: dfec-products-secrets
+        command: ["npm", "run", "start:prod"]
+
+        livenessProbe: 
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        
+        ports:
+        - containerPort: 80 
+
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Gi"
+            cpu: "500m"

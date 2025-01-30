@@ -8,7 +8,6 @@ services:
      - ./:/app
     # healthcheck:
     # deploy:
-    environment: 
-      PORT: 8080
+    environment:
       NODE_ENV: development
       NODE_OPTIONS: '--max-old-space-size=512'
