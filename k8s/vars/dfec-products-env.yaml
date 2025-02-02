@@ -5,7 +5,7 @@ metadata:
   namespace: default
 data:
   DB_NAME: products
-  DB_HOST: products-database
+  DB_HOST: dfec-products-db-svc
   DB_USER: products-user 
   DB_PORT: '3306'
   REDIS_HOST: DFEC-cache

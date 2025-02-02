@@ -21,29 +21,43 @@ spec:
         - configMapRef: 
             name: dfec-products-env
         - secretRef:
-            name: dfec-products-secrets
+            name: dfec-secrets
         command: ["npm", "run", "start:prod"]
 
         livenessProbe: 
           httpGet:
             path: /api/health
             port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
+          initialDelaySeconds: 10
+          periodSeconds: 20
         readinessProbe:
           httpGet:
             path: /api/health
             port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
+          initialDelaySeconds: 10
+          periodSeconds: 20
         
         ports:
-        - containerPort: 80 
+        - containerPort: 8080 
 
         resources:
           requests:
             memory: "500Mi"
             cpu: "250m"
           limits:
-            memory: "1024Gi"
+            memory: "1024Mi"
             cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dfec-products-svc
+spec: 
+  selector:
+    app: dfec-products
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 31110
+  type: LoadBalancer

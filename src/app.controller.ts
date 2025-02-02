@@ -1,7 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiExcludeController } from '@nestjs/swagger';
-import { uptime } from 'os';
 
 @Controller()
 @ApiExcludeController()
@@ -14,6 +13,6 @@ export class AppController {
   }
   @Get('health')
   health() {
-    return { status: 'UP', uptime: `${(uptime() / 60).toFixed(2)} minutes` };
+    return { status: 'UP', uptime: `${(process.uptime() / 60).toFixed(2)} minutes` };
   }
 }

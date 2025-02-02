@@ -7,3 +7,4 @@ metadata:
 data:
   NODE_ENV: development
   NODE_OPTIONS: '--max-old-space-size=512'
+  PORT: '8080'
