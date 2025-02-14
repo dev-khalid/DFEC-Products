@@ -6,14 +6,14 @@ export const envConfig: ConfigModuleOptions = {
     NODE_ENV: Joi.string()
       .valid('development', 'production', 'test')
       .default('development'),
-    PORT: Joi.number().port(),
+    PORT: Joi.number().port().default(3000),
     DB_NAME: Joi.string().required(),
     DB_HOST: Joi.string().required(),
     DB_USER: Joi.string().required(),
     DB_PASSWORD: Joi.string().required(),
     DB_PORT: Joi.number().port().default(3306),
     REDIS_PORT: Joi.number().port().default(6379),
-    REDIS_HOST: Joi.string(),
+    REDIS_HOST: Joi.string().required(),
     REDIS_PASSWORD: Joi.string().required(),
   }),
 };

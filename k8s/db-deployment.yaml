@@ -2,61 +2,66 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dfec-products-db
-spec: 
-  selector: 
-    matchLabels: 
+spec:
+  selector:
+    matchLabels:
       app: dfec-products-db #this will be used by the service to select the pods
   strategy:
     type: Recreate
-  
-  template: 
-    metadata: 
-      labels: 
+
+  template:
+    metadata:
+      labels:
         app: dfec-products-db
-    spec: 
-      containers: 
+    spec:
+      containers:
         - image: mysql:8.4
           name: dfec-products-db-container
-          env: 
+          env:
             - name: MYSQL_ROOT_PASSWORD
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   name: dfec-secrets
                   key: DB_PASSWORD
             - name: MYSQL_DATABASE
-              valueFrom: 
-                configMapKeyRef: 
+              valueFrom:
+                configMapKeyRef:
                   name: dfec-products-env
                   key: DB_NAME
             - name: MYSQL_USER
-              valueFrom: 
-                configMapKeyRef: 
+              valueFrom:
+                configMapKeyRef:
                   name: dfec-products-env
                   key: DB_USER
             - name: MYSQL_PASSWORD
-              valueFrom: 
-                secretKeyRef: 
+              valueFrom:
+                secretKeyRef:
                   name: dfec-secrets
                   key: DB_PASSWORD
-          ports: 
+          ports:
             - containerPort: 3306
               name: mysql
           volumeMounts:
             - name: dfec-products-db-persistent-volume
               mountPath: /var/lib/mysql
-
-      volumes: 
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 1.5Gi
+              cpu: 750m
+      volumes:
         - name: dfec-products-db-persistent-volume
-          persistentVolumeClaim: 
+          persistentVolumeClaim:
             claimName: dfec-products-db-pvc
 ---
 apiVersion: v1
 kind: Service
-metadata: 
+metadata:
   name: dfec-products-db-svc
-spec: 
-  selector: 
+spec:
+  selector:
     app: dfec-products-db
-  ports: 
+  ports:
     - port: 3306
-

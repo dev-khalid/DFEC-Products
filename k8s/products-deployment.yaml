@@ -6,53 +6,58 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dfec-products 
+      app: dfec-products
   template:
     metadata:
       labels:
-        app: dfec-products 
+        app: dfec-products
     spec:
       containers:
-      - name: dfec-products-container
-        image: khalidhossain/dfec-products:latest
-        envFrom: 
-        - configMapRef: 
-            name: common-env
-        - configMapRef: 
-            name: dfec-products-env
-        - secretRef:
-            name: dfec-secrets
-        command: ["npm", "run", "start:prod"]
+        - name: dfec-products-container
+          image: khalidhossain/dfec-products:latest
+          envFrom:
+            - configMapRef:
+                name: common-env
+            - configMapRef:
+                name: dfec-products-env
+            - secretRef:
+                name: dfec-secrets
 
-        livenessProbe: 
-          httpGet:
-            path: /api/health
-            port: 8080
-          initialDelaySeconds: 10
-          periodSeconds: 20
-        readinessProbe:
-          httpGet:
-            path: /api/health
-            port: 8080
-          initialDelaySeconds: 10
-          periodSeconds: 20
-        
-        ports:
-        - containerPort: 8080 
+          command: ['npm', 'run', 'start:prod']
 
-        resources:
-          requests:
-            memory: "500Mi"
-            cpu: "250m"
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            timeoutSeconds: 10
+            failureThreshold: 3
+
+          ports:
+            - containerPort: 8080
+
+          resources:
+            requests:
+              memory: '500Mi'
+              cpu: '250m'
+            limits:
+              memory: '1024Mi'
+              cpu: '500m'
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: dfec-products-svc
-spec: 
+spec:
   selector:
     app: dfec-products
   ports:

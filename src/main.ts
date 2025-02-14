@@ -5,13 +5,17 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AllExceptionsFilter } from './exception-filter';
 
+//TODO: Add an error handler
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const httpAdapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
-  app.setGlobalPrefix('/api');
+  app.setGlobalPrefix('/api', {
+    exclude: ['health'],
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: false,

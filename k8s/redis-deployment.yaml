@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dfec-redis
+  labels:
+    app: dfec-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dfec-redis
+  template:
+    metadata:
+      labels:
+        app: dfec-redis
+    spec:
+      containers:
+        - name: redis-container
+          image: redis:latest
+          command:
+            [
+              'redis-server',
+              '--requirepass', '&2@9J*4h%7F#d16s5V$',
+              '--appendonly',
+              'yes',
+              '--save',
+              '600',
+              '1',
+            ]
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+          volumeMounts:
+            - name: dfec-redis-persistent-volume
+              mountPath: /data
+
+      volumes:
+        - name: dfec-redis-persistent-volume
+          persistentVolumeClaim:
+            claimName: dfec-redis-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis #access the service with this name from other deployments or pods.
+  labels:
+    app: redis
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+  selector:
+    app: dfec-redis
+  type: ClusterIP

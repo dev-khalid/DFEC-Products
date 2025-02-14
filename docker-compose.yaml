@@ -13,20 +13,23 @@ services:
     command: npm run start:dev
     depends_on:
       - products-database
+      - DFEC-redis
     environment:
       DB_NAME: products
       DB_HOST: products-database
       DB_USER: products-user
       DB_PASSWORD: secret-password
       DB_PORT: 3306
-      REDIS_HOST: DFEC-cache
+      REDIS_HOST: DFEC-redis
       REDIS_PORT: 6379
       REDIS_PASSWORD: '&2@9J*4h%7F#d16s5V$'
+      PORT: 8080
     healthcheck:
-      test: ['CMD', 'curl', '-f', 'http://localhost:8080/health']
-      interval: 2m
-      timeout: 30s
+      test: wget --spider http://localhost:8080/health
+      interval: 60s
+      timeout: 10s
       retries: 3
+      start_period: 5s
     volumes:
       - ./src/migrations:/app/src/migrations
   products-database:
@@ -62,13 +65,13 @@ services:
       interval: 3m
       timeout: 30s
       retries: 3
-  DFEC-cache:
+  DFEC-redis:
     #this will later be used at all other services.
     image: redis:7.4.0-alpine
     networks:
       - DFEC
     container_name: DFEC-redis
-    command: redis-server --requirepass "&2@9J*4h%7F#d16s5V$"
+    command: redis-server --requirepass "&2@9J*4h%7F#d16s5V$" --user "DFEC-redis-user"
     volumes:
       - cache:/data
     ports:

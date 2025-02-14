@@ -4,9 +4,10 @@ Kubernetes:
 1. Deploy products-server ✅
 2. Deploy mysql ✅
 3. Deploy redis
-4. Connect and run ✅
-5. Convert it to helm chart
-6. Learn how mysql and redis works with helm
+4. Fix mysql persistentVolumeReclaimPolicy ✅
+5. Connect and run ✅
+6. Convert it to helm chart
+7. Learn how mysql and redis works with helm
 
 Service: 
 1. Complete inventory-service. 
@@ -30,6 +31,9 @@ Lint/format: Configure eslint best practices with typescript.
 
 CI/CD
 1. Github actions for "Build and push" image to GCR and Dockerhub. 
- 
+
+
+AWS
+1. 
 
 
