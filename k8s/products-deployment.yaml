@@ -15,6 +15,7 @@ spec:
       containers:
         - name: dfec-products-container
           image: khalidhossain/dfec-products:latest
+          imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
                 name: common-env

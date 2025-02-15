@@ -3,14 +3,9 @@ Tasks are sorted by priority:
 Kubernetes: 
 1. Deploy products-server ✅
 2. Deploy mysql ✅
-3. Deploy redis
+3. Deploy redis ✅
 4. Fix mysql persistentVolumeReclaimPolicy ✅
 5. Connect and run ✅
-6. Convert it to helm chart
-7. Learn how mysql and redis works with helm
-
-Service: 
-1. Complete inventory-service. 
 
 Tests: 
 1. Unit test services
@@ -21,19 +16,28 @@ Tests:
     3.1 Learn best practices (From article and tutorials) and setup for e2e test 
     3.2 Write e2e test for products controller.
     3.3 Write e2e test for app controller.
-    3.4 Write e2e test for inventory controller.
-    3.5 Write e2e test for category controller.
+    3.4 Write e2e test for category controller.
 
-Documentation: 
-1. Make sure swagger api document cover each endpoints, currently it's incomplete.
+Service: 
+1. Complete inventory-service. 
 
-Lint/format: Configure eslint best practices with typescript. 
 
 CI/CD
 1. Github actions for "Build and push" image to GCR and Dockerhub. 
 
+Lint/format: 
+1. Configure eslint best practices with typescript. 
+
+Kubernetes: 
+1. Review helm again
+2. Helpers.tpl
+3. Convert it to helm chart
+4. Learn how mysql and redis works with helm
+
+Documentation: 
+1. Make sure swagger api document cover each endpoints, currently it's incomplete.
 
 AWS
-1. 
+1. Prepare a self hosted runner for github ci/cd. 
 
 
